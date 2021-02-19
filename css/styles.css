@@ -1,0 +1,18 @@
+body{
+    height: 100vh;
+}
+
+.wall{
+    background-color: black;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+}
+
+#player{
+    width: 100px;
+    height: 100px;
+    background-color: grey;
+    position: absolute;
+}
