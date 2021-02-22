@@ -1,15 +1,29 @@
-//CONSTANTS
-const MOVE_SPEED = 5;
-const PLAYER = document.getElementById('player');
+//testing vars
 const spawn = document.getElementById('spawn');
 const render = document.getElementById('render');
 const unrender = document.getElementById('unrender');
+//end testing vars
+
 const body = document.querySelector('body');
 
 //-----------------------------------------------------------------
 
 //STATE
 let currentLevel = 0;
+
+//-----------------------------------------------------------------
+
+
+//Objects
+const player = {
+    health: 6,
+    damage: 1,
+    speed: 5,
+    pos: [0,0],
+    size: [100, 100],
+    moveDirToggle: [1,1,1,1],
+    element: document.getElementById('player'),
+}
 
 //-----------------------------------------------------------------
 
@@ -40,22 +54,21 @@ initialize();
 //INITIALIZATION
 
 function initialize(){
-    player_X = 500;
-    player_Y = 100;
-    //MOVE_UP, MOVE_DOWN, MOVE_RIGHT, MOVE_LEFT
-    moveDirToggle = [1,1,1,1];
+
+    player.pos = [80,100];
 
     //initialize levels
     initLevels();
     renderWalls(currentLevel);
+    playerRender();
 }
 
 //RENDER
 
 //render the player
 function playerRender(){
-    PLAYER.style.top = player_Y+'px';
-    PLAYER.style.left = player_X+'px';
+    player.element.style.top = player.pos[1]+'px';
+    player.element.style.left = player.pos[0]+'px';
 }
 
 //render current level walls
