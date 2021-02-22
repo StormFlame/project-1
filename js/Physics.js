@@ -8,19 +8,20 @@ let player_Y;
 //MOVE_UP, MOVE_DOWN, MOVE_RIGHT, MOVE_LEFT
 let moveDirToggle;
 
-const WALLS = [];
 
+let levelWalls;
 //-----------------------------------------------------------------
 
 //check for collision
 function checkCollisions(){
-    for(let i = 0; i < WALLS.length; i++){
+    levelWalls = allLevels[currentLevel].walls;
+    for(let i = 0; i < levelWalls.length; i++){
         //get player and wall radius(width/2);
         const playerRadius = parseInt(getComputedStyle(PLAYER).width)/2;
-        const wallRadius_x = WALLS[i].width/2;
-        const wallRadius_y = WALLS[i].height/2;
+        const wallRadius_x = levelWalls[i].width/2;
+        const wallRadius_y = levelWalls[i].height/2;
 
-        const dist = distance(player_X+playerRadius, player_Y+playerRadius, WALLS[i].pos_x+wallRadius_x, WALLS[i].pos_y+wallRadius_y);
+        const dist = distance(player_X+playerRadius, player_Y+playerRadius, levelWalls[i].pos_x+wallRadius_x, levelWalls[i].pos_y+wallRadius_y);
         
         //set threshholds for collision(player radius + wall radius)
         const distThreshold_x = playerRadius + wallRadius_x;
@@ -35,10 +36,12 @@ function checkCollisions(){
                 //check top
                 if(dist[1] >= 0 && dist[1] <= distThreshold_y){
                     moveDirToggle[1] = 0;
+                    console.log('top');
 
                     //check bottom
                 }else if(dist[1] <= 0 && dist[1] >= -distThreshold_y){
                     moveDirToggle[0] = 0;
+                    console.log('bottom');
                 }
 
             }
@@ -49,10 +52,12 @@ function checkCollisions(){
                 //check right
                 if(dist[0] <= 0 && dist[0] >= -distThreshold_x){
                     moveDirToggle[3] = 0;
+                    console.log('right');
 
                     //check left
                 }else if(dist[0] >= 0 && dist[0] <= distThreshold_x){
                     moveDirToggle[2] = 0;
+                    console.log('left');
                 }
             }
         }else{
