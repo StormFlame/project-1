@@ -16,7 +16,7 @@ let currentLevel = 0;
 //EVENT LISTENERS
 
 //call move with keypress key
-document.addEventListener('keypress', function(e){move(e.key)});
+document.addEventListener('keypress', function(e){playerMove(e.key)});
 
 spawn.addEventListener('click', function(e){
     loadLevel(0);
@@ -56,7 +56,6 @@ function initialize(){
 function playerRender(){
     PLAYER.style.top = player_Y+'px';
     PLAYER.style.left = player_X+'px';
-    checkCollisions();
 }
 
 //render current level walls

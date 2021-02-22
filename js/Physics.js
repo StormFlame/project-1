@@ -1,4 +1,4 @@
-//PHYSICS ENGINE FOUNDATION
+//PHYSICS ENGINE
 
 //-----------------------------------------------------------------
 
@@ -8,29 +8,24 @@ let player_Y;
 //MOVE_UP, MOVE_DOWN, MOVE_RIGHT, MOVE_LEFT
 let moveDirToggle;
 
-
-let levelWalls;
 //-----------------------------------------------------------------
 
 //check for collision
-function checkCollisions(){
-    levelWalls = allLevels[currentLevel].walls;
+function checkCollisions(posOne, PosTwo, sizeOne, sizeTwo, returnSides){
+    
+    const objOneRadius_x = sizeOne[0]/2;
+    const objOneRadius_y = sizeOne[1]/2;
+    const objTwoRadius_x = sizeTwo[0]/2;
+    const objTwoRadius_y = sizeTwo[1]/2;
+
+    const dist = distance(posOne[0]+objOneRadius_x, posOne[1]+objOneRadius_y, PosTwo[0]+objTwoRadius_x, PosTwo[1]+objTwoRadius_y);
+
+    const distThreshold_x = objOneRadius_x + objTwoRadius_x;
+    const distThreshold_y = objOneRadius_y + objTwoRadius_y;
+
     let dir = [1,1,1,1];
-    for(let i = 0; i < levelWalls.length; i++){
-        //get player and wall radius(width/2);
-        const playerRadius = parseInt(getComputedStyle(PLAYER).width)/2;
-        const wallRadius_x = levelWalls[i].width/2;
-        const wallRadius_y = levelWalls[i].height/2;
-
-        const dist = distance(player_X+playerRadius, player_Y+playerRadius, levelWalls[i].pos_x+wallRadius_x, levelWalls[i].pos_y+wallRadius_y);
-        
-        //set threshholds for collision(player radius + wall radius)
-        const distThreshold_x = playerRadius + wallRadius_x;
-        const distThreshold_y = playerRadius + wallRadius_y;
-
-        //check quadrant of collision and stop movement accordingly
-        if(Math.abs(dist[0]) <= distThreshold_x && Math.abs(dist[1]) <= distThreshold_y){
-
+    if(Math.abs(dist[0]) <= distThreshold_x && Math.abs(dist[1]) <= distThreshold_y){
+        if(returnSides){
             //check top
             if(dist[1] >= distThreshold_y-1 && dist[1] <= distThreshold_y){
                 dir[1] = 0;
@@ -48,13 +43,32 @@ function checkCollisions(){
             }else if(dist[0] >= distThreshold_x-1 && dist[0] <= distThreshold_x){
                 dir[2] = 0;
             }
+        }else{
+            return true;
         }
     }
-    moveDirToggle = dir;
+
+    return dir;
 }
 
 // check keypress key and move player accordingly
-function move(key){
+function playerMove(key){
+
+    moveDirToggle = [1,1,1,1];
+    const levelWalls = allLevels[currentLevel].walls;
+
+    for(let i = 0; i < levelWalls.length; i++){
+        const dir = checkCollisions([player_X, player_Y], 
+            [levelWalls[i].pos_x, levelWalls[i].pos_y], 
+            [parseInt(getComputedStyle(PLAYER).width), parseInt(getComputedStyle(PLAYER).height)],
+             [levelWalls[i].width, levelWalls[i].height], true);
+
+        moveDirToggle[0] *= dir[0];
+        moveDirToggle[1] *= dir[1];
+        moveDirToggle[2] *= dir[2];
+        moveDirToggle[3] *= dir[3];
+    }
+
     switch(key){
         case 's':
             player_Y += MOVE_SPEED * moveDirToggle[1];
