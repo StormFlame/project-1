@@ -6,14 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/map_0.css">
+    <link rel="stylesheet" href="css/enemystyles.css">
     <title>Document</title>
 </head>
 <body>
+
+    <button id="spawn" style="margin-left: 500px;">spawn enemies</button>
+    <button id="render" style="margin-left: 600px;">render enemies</button>
+    <button id="unrender" style="margin-left: 700px;">unrender enemies</button>
+
     <div id="player"></div>
+
     <section id="walls">
         <div id="wall_0" class="wall"></div>
     </section>
+
     <script src="js/Physics.js"></script>
+    <script src="js/enemies.js"></script>
+    <script src="js/levels.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
