@@ -19,7 +19,6 @@ let currentLevel = 0;
 document.addEventListener('keypress', function(e){move(e.key)});
 
 spawn.addEventListener('click', function(e){
-    initLevels();
     loadLevel(0);
 });
 
@@ -80,6 +79,7 @@ function renderEnemies(indx){
             enemy.element.style.left = enemy.position[0] + 'px';
 
             body.appendChild(enemy.element);
+
             enemy.element.addEventListener('click', function(e){
             enemy.takeDamage(1);
         });
@@ -96,7 +96,7 @@ function RndmRange(min, max){
 //----------------LEVELS
 
 //LEVEL SETUP
-function spawnEnemies(pos, enemyType, indx){
+function spawnEnemies(pos, enemyType, lvlIndx, amountIndx){
 
     const pos_x = RndmRange(pos[0][0], pos[1][0]);
     const pos_y = RndmRange(pos[0][1], pos[1][1]);
@@ -104,7 +104,7 @@ function spawnEnemies(pos, enemyType, indx){
     const div = document.createElement('div');
     div.className = enemyType.className;
 
-    const enemy = new Enemy([pos_x, pos_y], enemyType.health, enemyType.damage, div, indx);
+    const enemy = new Enemy([pos_x, pos_y], enemyType.health, enemyType.damage, div, lvlIndx, amountIndx);
 
     return enemy;
 }
@@ -113,7 +113,8 @@ function spawnEnemies(pos, enemyType, indx){
 //LEVEL EXIT
 
 function unloadLevel(indx){
-    allLevels[indx].enemies.forEach(function(enemy){
-        enemy.element.remove();
-    });
+    for(let i = 0; i<allLevels[indx].enemies.length; i++){
+        allLevels[indx].enemies[i].element.remove();
+    }
+    allLevels[indx].enemies = [];
 }

@@ -1,12 +1,13 @@
 //CLASSES
 
 class Enemy{
-    constructor(pos, health, damage, element, levelIndx){
+    constructor(pos, health, damage, element, levelIndx, amountIndx){
         this.position = pos;
         this.health = health;
         this.damage = damage;
         this.element = element;
         this.levelIndx = levelIndx;
+        this.amountIndx = amountIndx;
     }
 
     takeDamage(amount){
@@ -19,7 +20,7 @@ class Enemy{
 
     die(){
         const level = allLevels[this.levelIndx];
-        level.enemiesAmount -= 1;
+        level.enemiesAmount[this.amountIndx] -= 1;
         level.enemies.splice(level.enemies.indexOf(this), 1);
         this.element.remove();
     }

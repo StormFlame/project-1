@@ -15,6 +15,7 @@ let levelWalls;
 //check for collision
 function checkCollisions(){
     levelWalls = allLevels[currentLevel].walls;
+    let dir = [1,1,1,1];
     for(let i = 0; i < levelWalls.length; i++){
         //get player and wall radius(width/2);
         const playerRadius = parseInt(getComputedStyle(PLAYER).width)/2;
@@ -30,40 +31,26 @@ function checkCollisions(){
         //check quadrant of collision and stop movement accordingly
         if(Math.abs(dist[0]) <= distThreshold_x && Math.abs(dist[1]) <= distThreshold_y){
 
-            //check x
-            if(dist[0] <= distThreshold_x && dist[0] >= -distThreshold_x){
-                
-                //check top
-                if(dist[1] >= 0 && dist[1] <= distThreshold_y){
-                    moveDirToggle[1] = 0;
-                    console.log('top');
+            //check top
+            if(dist[1] >= distThreshold_y-1 && dist[1] <= distThreshold_y){
+                dir[1] = 0;
 
-                    //check bottom
-                }else if(dist[1] <= 0 && dist[1] >= -distThreshold_y){
-                    moveDirToggle[0] = 0;
-                    console.log('bottom');
-                }
-
+            //check bottom
+            }else if(dist[1] <= -distThreshold_y+1 && dist[1] >= -distThreshold_y){
+                dir[0] = 0;
             }
 
-            //check y            
-            if(dist[1] <= distThreshold_y && dist[1] >= -distThreshold_y){
+            //check right
+            if(dist[0] <= -distThreshold_x+1 && dist[0] >= -distThreshold_x){
+                 dir[3] = 0;
 
-                //check right
-                if(dist[0] <= 0 && dist[0] >= -distThreshold_x){
-                    moveDirToggle[3] = 0;
-                    console.log('right');
-
-                    //check left
-                }else if(dist[0] >= 0 && dist[0] <= distThreshold_x){
-                    moveDirToggle[2] = 0;
-                    console.log('left');
-                }
+            //check left
+            }else if(dist[0] >= distThreshold_x-1 && dist[0] <= distThreshold_x){
+                dir[2] = 0;
             }
-        }else{
-            moveDirToggle = [1,1,1,1];
         }
     }
+    moveDirToggle = dir;
 }
 
 // check keypress key and move player accordingly

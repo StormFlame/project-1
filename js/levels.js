@@ -29,10 +29,10 @@ class Level{
 //OBJECTS
 
 const LevelOneWalls = {
-    pos_x: [0, 200],
-    pos_y: [0, 200],
-    width: [500, 50],
-    height: [70, 50]
+    pos_x: [0, 200, 300],
+    pos_y: [0, 200, 500],
+    width: [500, 50, 100],
+    height: [70, 50, 250]
 }
 
 const LevelTwoWalls = {
@@ -47,7 +47,6 @@ walls = [LevelOneWalls, LevelTwoWalls];
 
 
 //-----------FUNCTIONS
-
 
 //INITIALIZE
 
@@ -73,12 +72,11 @@ function initWalls(){
 //------
 
 function loadLevel(indx){
-
     const level = allLevels[indx];
     for(let i = 0; i<level.enemiesToSpawn.length;i++){
 
         for(let j = 0; j < level.enemiesAmount[i]; j++){
-            enemy = spawnEnemies(level.spawnAreas[i], level.enemiesToSpawn[i], indx);
+            enemy = spawnEnemies(level.spawnAreas[i], level.enemiesToSpawn[i], indx, i);
             level.enemies.push(enemy);
         }
     }
