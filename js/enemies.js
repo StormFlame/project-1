@@ -45,19 +45,20 @@ const tektite = {
     damage: 1,
     className: 'tektite',
     behavior: function tektiteBehavior(tektite){
-        console.log(tektite);
+
         //curve function a
         const a = RndmRange(135, 300, false);
     
         const spawnAreas = allLevels[tektite.levelIndx].spawnAreas[0];
     
-        const axis = RndmRange(-1,2, true);
-        const dir = RndmRange(-1,2, true);
+        const axis = RndmRange(-1,1, true);
+        let dir = RndmRange(-1,1, true);
     
         let x = 0;
-        let y = axis > 0 ? tektite.pos[1] : tektite.pos[0];
+        let y = axis === 0 ? tektite.pos[1] : tektite.pos[0];
     
         let dest = getDestination();
+        console.log(dest);
     
         let clear = false;
     
@@ -71,9 +72,9 @@ const tektite = {
             
             x += 5;
     
-            if(axis > 0){
+            if(axis === 0){
     
-                if(dir > 0){
+                if(dir === 0){
                     if(tektite.pos[0] < dest[0]){
                         tektite.pos[0] += 5;
         
@@ -92,7 +93,7 @@ const tektite = {
     
             }else{
     
-                if(dir > 0){
+                if(dir === 0){
                     if(tektite.pos[1] > dest[1]){
                         tektite.pos[1] -= 5;
         
@@ -121,18 +122,38 @@ const tektite = {
     
         //get move location
         function getDestination(){
+            const poses = [[tektite.pos[0] + 200, tektite.pos[1] - curve(200)],[tektite.pos[0] - 200, tektite.pos[1] - curve(200)],[tektite.pos[0] + curve(200), tektite.pos[1] - 200],[tektite.pos[0] + curve(200), tektite.pos[1] + 200]];
             let output;
-            if(axis > 0){
-                if(dir > 0){
-                    output = [tektite.pos[0] + 200, tektite.pos[1] - curve(200)]
+            if(axis === 0){
+
+                if(dir === 0 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][1][0] > poses[0]){
+                    output = poses[0];
                 }else{
-                    output = [tektite.pos[0] - 200, tektite.pos[1] - curve(200)]
+                    output = poses[1]
+                    dir = -1;
                 }
-            }else{
-                if(dir > 0){
-                    output = [tektite.pos[0] + curve(200), tektite.pos[1] - 200]
+                
+                if(dir === -1 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][0][0] < tektite.pos[0] - 200){
+                    output = poses[1];
                 }else{
-                    output = [tektite.pos[0] + curve(200), tektite.pos[1] + 200]
+                    output = poses[0]
+                    dir = 0;
+                };
+
+            }else{
+
+                if(dir === 0 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][0][1] < tektite.pos[1] - 200){
+                    output = poses[2];
+                }else{
+                    output = poses[3]
+                    dir = -1;
+                }
+
+                if(dir === -1 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][1][1] > tektite.pos[1] + 200){
+                    output = poses[3];
+                }else{
+                    output = poses[2]
+                    dir = 0;
                 }
             }
     

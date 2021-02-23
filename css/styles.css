@@ -1,5 +1,6 @@
 body{
     height: 100vh;
+    border: solid black 4px;
 }
 
 .wall{
