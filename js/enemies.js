@@ -48,7 +48,7 @@ const tektite = {
 function tektiteBehavior(tektite){
 
     //curve function a
-    a = RndmRange(160, 400, false);
+    a = RndmRange(135, 300, false);
 
     const spawnAreas = allLevels[tektite.levelIndx].spawnAreas[0];
 
@@ -60,45 +60,50 @@ function tektiteBehavior(tektite){
 
     let dest = getLocation();
 
+    let clear = false;
+
     //move tektite along curve
     const move = setInterval(function(){
 
-        x += 10;
+        x += 5;
 
         if(dir > 0){
             if(Math.abs(tektite.pos[0]) < Math.abs(dest)){
 
                 //set tektite position
-                tektite.pos[0] += 10;
+                tektite.pos[0] += 5;
 
             }else{
-                clearInterval(move);
+                clear = true;
             }
 
         }else{
                 if(tektite.pos[0] > Math.abs(dest)){
 
                     //set tektite position
-                    tektite.pos[0] -= 10;
+                    tektite.pos[0] -= 5;
                 }else{
-                    clearInterval(move);
+                    clear = true;
                 }
             }
 
         tektite.pos[1] = y-curve(x);
         renderEnemies(tektite.levelIndx);
 
-    }, 40);
+        if(clear){
+            clearInterval(move);
+        }
+
+    }, 20);
 
     //curve function
     function curve(x){
-        //return -(x*x)/a + a*x;
         return -(x*x)/a + x
     }
 
     //get move location
     function getLocation(){
-        const destPlus = RndmRange(100, 200);
+        const destPlus = 200
         let output = tektite.pos[0];
 
         if(dir > 0){

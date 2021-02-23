@@ -42,7 +42,7 @@ const LevelTwoWalls = {
     height: [70]
 }
 
-const level_One = new Level([tektite], [ [ [300,300], [800,800] ] ], [1]);
+const level_One = new Level([tektite], [ [ [10,10], [1652,694] ] ], [5]);
 walls = [LevelOneWalls, LevelTwoWalls];
 
 
