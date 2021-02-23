@@ -89,3 +89,13 @@ function distance(x_one, y_one, x_two, y_two){
     y = y_two - y_one;
     return [x,y];
 }
+
+function RndmRange(min, max, returnInt){
+    if(returnInt){
+        output = Math.floor(Math.random() * (max - min) + min);
+    }else{
+        output = Math.random() * (max - min) + min;
+    }
+
+    return output;
+}

@@ -87,8 +87,8 @@ function renderWalls(indx){
 function renderEnemies(indx){
 
     allLevels[indx].enemies.forEach(function(enemy){
-            enemy.element.style.top = enemy.position[1] + 'px';
-            enemy.element.style.left = enemy.position[0] + 'px';
+            enemy.element.style.top = enemy.pos[1] + 'px';
+            enemy.element.style.left = enemy.pos[0] + 'px';
 
             body.appendChild(enemy.element);
 
@@ -98,25 +98,18 @@ function renderEnemies(indx){
     });
 }
 
-//HELPER
-
-function RndmRange(min, max){
-    output = Math.floor(Math.random() * (max - min) + min);
-    return output;
-}
-
 //----------------LEVELS
 
 //LEVEL SETUP
 function spawnEnemies(pos, enemyType, lvlIndx, amountIndx){
 
-    const pos_x = RndmRange(pos[0][0], pos[1][0]);
-    const pos_y = RndmRange(pos[0][1], pos[1][1]);
+    const pos_x = RndmRange(pos[0][0], pos[1][0], true);
+    const pos_y = RndmRange(pos[0][1], pos[1][1], true);
 
     const div = document.createElement('div');
     div.className = enemyType.className;
 
-    const enemy = new Enemy([pos_x, pos_y], enemyType.health, enemyType.damage, div, lvlIndx, amountIndx);
+    const enemy = new Enemy([pos_x, pos_y], enemyType.health, enemyType.damage, div, lvlIndx, amountIndx, enemyType.behavior);
 
     return enemy;
 }

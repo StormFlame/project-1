@@ -42,7 +42,7 @@ const LevelTwoWalls = {
     height: [70]
 }
 
-const level_One = new Level([Froggy], [ [ [100,100], [500,500] ] ], [5]);
+const level_One = new Level([tektite], [ [ [300,300], [800,800] ] ], [1]);
 walls = [LevelOneWalls, LevelTwoWalls];
 
 
@@ -77,6 +77,7 @@ function loadLevel(indx){
 
         for(let j = 0; j < level.enemiesAmount[i]; j++){
             enemy = spawnEnemies(level.spawnAreas[i], level.enemiesToSpawn[i], indx, i);
+            enemy.behavior();
             level.enemies.push(enemy);
         }
     }
