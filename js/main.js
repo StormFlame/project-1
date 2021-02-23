@@ -92,9 +92,9 @@ function renderEnemies(indx){
 
             body.appendChild(enemy.element);
 
-            enemy.element.addEventListener('click', function(e){
-            enemy.takeDamage(1);
-        });
+        //     enemy.element.addEventListener('click', function(e){
+        //     enemy.takeDamage(1);
+        // });
     });
 }
 
@@ -109,7 +109,7 @@ function spawnEnemies(pos, enemyType, lvlIndx, amountIndx){
     const div = document.createElement('div');
     div.className = enemyType.className;
 
-    const enemy = new Enemy([pos_x, pos_y], enemyType.health, enemyType.damage, div, lvlIndx, amountIndx, enemyType.behavior);
+    const enemy = new Enemy([pos_x, pos_y], enemyType.health, enemyType.damage, div, lvlIndx, amountIndx, enemyType);
 
     return enemy;
 }
