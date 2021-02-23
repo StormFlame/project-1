@@ -33,7 +33,7 @@ class Enemy{
                 this.enemyObj.behavior(this);
                 this.running = true;
             }
-        }, RndmRange(1500, 4000, true));
+        }, RndmRange(800, 2000, true));
     }
 }
 
@@ -70,20 +70,20 @@ const tektite = {
                 tektite.running = false;
             }
             
-            x += 5;
+            x += 10;
     
             if(axis === 0){
     
                 if(dir === 0){
                     if(tektite.pos[0] < dest[0]){
-                        tektite.pos[0] += 5;
+                        tektite.pos[0] += 10;
         
                     }else{
                         clear();
                     }
                 }else{
                     if(tektite.pos[0] > dest[0]){
-                        tektite.pos[0] -= 5;
+                        tektite.pos[0] -= 10;
                     }else{
                         clear();
                     }
@@ -95,14 +95,14 @@ const tektite = {
     
                 if(dir === 0){
                     if(tektite.pos[1] > dest[1]){
-                        tektite.pos[1] -= 5;
+                        tektite.pos[1] -= 10;
         
                     }else{
                         clear();
                     }
                 }else{
                     if(tektite.pos[1] < dest[1]){
-                        tektite.pos[1] += 5;
+                        tektite.pos[1] += 10;
                     }else{
                         clear();
                     }
@@ -113,7 +113,7 @@ const tektite = {
     
             renderEnemies(tektite.levelIndx);
     
-        }, 50);
+        }, 10);
     
         //curve function
         function curve(x){
