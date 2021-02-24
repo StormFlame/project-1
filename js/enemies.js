@@ -33,7 +33,7 @@ class Enemy{
                 this.enemyObj.behavior(this);
                 this.running = true;
             }
-        }, RndmRange(800, 2000, true));
+        }, RndmRange(800, 3000, true));
     }
 }
 
@@ -56,9 +56,12 @@ const tektite = {
     
         let x = 0;
         let y = axis === 0 ? tektite.pos[1] : tektite.pos[0];
+
+        const speed = 10;
+        const moveAmount = 200;
+        const inter = 40;
     
         let dest = getDestination();
-        console.log(dest);
     
         let clear = false;
     
@@ -70,20 +73,20 @@ const tektite = {
                 tektite.running = false;
             }
             
-            x += 10;
+            x += speed;
     
             if(axis === 0){
     
                 if(dir === 0){
                     if(tektite.pos[0] < dest[0]){
-                        tektite.pos[0] += 10;
+                        tektite.pos[0] += speed;
         
                     }else{
                         clear();
                     }
                 }else{
                     if(tektite.pos[0] > dest[0]){
-                        tektite.pos[0] -= 10;
+                        tektite.pos[0] -= speed;
                     }else{
                         clear();
                     }
@@ -95,14 +98,14 @@ const tektite = {
     
                 if(dir === 0){
                     if(tektite.pos[1] > dest[1]){
-                        tektite.pos[1] -= 10;
+                        tektite.pos[1] -= speed;
         
                     }else{
                         clear();
                     }
                 }else{
                     if(tektite.pos[1] < dest[1]){
-                        tektite.pos[1] += 10;
+                        tektite.pos[1] += speed;
                     }else{
                         clear();
                     }
@@ -113,7 +116,7 @@ const tektite = {
     
             renderEnemies(tektite.levelIndx);
     
-        }, 10);
+        }, inter);
     
         //curve function
         function curve(x){
@@ -122,18 +125,18 @@ const tektite = {
     
         //get move location
         function getDestination(){
-            const poses = [[tektite.pos[0] + 200, tektite.pos[1] - curve(200)],[tektite.pos[0] - 200, tektite.pos[1] - curve(200)],[tektite.pos[0] + curve(200), tektite.pos[1] - 200],[tektite.pos[0] + curve(200), tektite.pos[1] + 200]];
+            const poses = [[tektite.pos[0] + moveAmount, tektite.pos[1] - curve(moveAmount)],[tektite.pos[0] - moveAmount, tektite.pos[1] - curve(moveAmount)],[tektite.pos[0] + curve(moveAmount), tektite.pos[1] - moveAmount],[tektite.pos[0] + curve(moveAmount), tektite.pos[1] + moveAmount]];
             let output;
             if(axis === 0){
 
-                if(dir === 0 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][1][0] > poses[0]){
+                if(dir === 0 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][1][0] > poses[0][0]){
                     output = poses[0];
                 }else{
                     output = poses[1]
                     dir = -1;
                 }
                 
-                if(dir === -1 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][0][0] < tektite.pos[0] - 200){
+                if(dir === -1 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][0][0] < poses[1][0]){
                     output = poses[1];
                 }else{
                     output = poses[0]
@@ -142,14 +145,14 @@ const tektite = {
 
             }else{
 
-                if(dir === 0 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][0][1] < tektite.pos[1] - 200){
+                if(dir === 0 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][0][1] < poses[2][1]){
                     output = poses[2];
                 }else{
                     output = poses[3]
                     dir = -1;
                 }
 
-                if(dir === -1 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][1][1] > tektite.pos[1] + 200){
+                if(dir === -1 && allLevels[tektite.levelIndx].spawnAreas[tektite.amountIndx][1][1] > poses[3][1]){
                     output = poses[3];
                 }else{
                     output = poses[2]

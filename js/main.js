@@ -1,9 +1,3 @@
-//testing vars
-const spawn = document.getElementById('spawn');
-const render = document.getElementById('render');
-const unrender = document.getElementById('unrender');
-//end testing vars
-
 const body = document.querySelector('body');
 
 //-----------------------------------------------------------------
@@ -32,18 +26,6 @@ const player = {
 //call move with keypress key
 document.addEventListener('keypress', function(e){playerMove(e.key)});
 
-spawn.addEventListener('click', function(e){
-    loadLevel(0);
-});
-
-render.addEventListener('click', function(e){
-    loadLevel(0);
-});
-
-unrender.addEventListener('click', function(e){
-    unloadLevel(0);
-});
-
 //-----------------------------------------------------------------
 
 //CALL START FUNCTIONS
@@ -59,8 +41,32 @@ function initialize(){
 
     //initialize levels
     initLevels();
-    renderWalls(currentLevel);
-    playerRender();
+    initWalls();
+    initGateways();
+
+    loadLevel(currentLevel);
+
+    update();
+}
+
+//UPDATE
+function update(){
+
+    const checkGateways = setInterval (() => {
+        gates = allLevels[currentLevel].gateways;
+
+        for(let i = 0; i < gates.length; i++){
+            const col = checkCollisions([gates[i].pos_x, gates[i].pos_y], [gates[i].width, gates[i].height], player.pos, player.size, false);
+            if(col === true){
+                unloadLevel(currentLevel);
+
+                player.pos = gates[i].playerPos;
+
+                currentLevel = gates[i].levelIndx;
+                loadLevel(currentLevel);
+            }
+        }
+    }, 1000);
 }
 
 //RENDER
@@ -115,11 +121,3 @@ function spawnEnemies(pos, enemyType, lvlIndx, amountIndx){
 }
 //-------
 
-//LEVEL EXIT
-
-function unloadLevel(indx){
-    for(let i = 0; i<allLevels[indx].enemies.length; i++){
-        allLevels[indx].enemies[i].element.remove();
-    }
-    allLevels[indx].enemies = [];
-}

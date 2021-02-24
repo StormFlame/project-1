@@ -36,9 +36,11 @@ function checkCollisions(posOne, sizeOne, PosTwo, sizeTwo, returnSides){
             }else if(dist[0] >= distThreshold_x-1 && dist[0] <= distThreshold_x){
                 dir[2] = 0;
             }
+
         }else{
             return true;
         }
+
     }
 
     return dir;

@@ -3,8 +3,20 @@ const allLevels = [];
 
 //STATE
 let walls;
+let gateways;
 
 //CLASSES
+
+class Gateway{
+    constructor(pos_x, pos_y, width, height, playerPos, levelIndx){
+        this.pos_x = pos_x;
+        this.pos_y = pos_y;
+        this.width = width;
+        this.height = height;
+        this.playerPos = playerPos;
+        this.levelIndx = levelIndx;
+    }
+}
 
 class Wall{
     constructor(pos_x, pos_y, width, height, element){
@@ -21,6 +33,8 @@ class Level{
         this.enemiesToSpawn = enemiesToSpawn;
         this.spawnAreas = spawnAreas;
         this.enemiesAmount = enemiesAmount;
+
+        this.gateways = [];
         this.enemies = [];
         this.walls = [];
     }
@@ -28,12 +42,14 @@ class Level{
 
 //OBJECTS
 
+//walls
 const LevelOneWalls = {
     pos_x: [0, 200, 300],
     pos_y: [0, 200, 500],
     width: [500, 50, 100],
     height: [70, 50, 250]
 }
+
 
 const LevelTwoWalls = {
     pos_x: [20],
@@ -42,8 +58,31 @@ const LevelTwoWalls = {
     height: [70]
 }
 
-const level_One = new Level([tektite], [ [ [10,10], [1652,694] ] ], [5]);
+//Gateways
+const LevelOneGateways ={
+    pos_x: [10],
+    pos_y: [200],
+    width: [30],
+    height: [150],
+    playerPos: [[800,500]],
+    levelIndx: [1]
+}
+
+const LevelTwoGateways ={
+    pos_x: [1500],
+    pos_y: [300],
+    width: [30],
+    height: [150],
+    playerPos: [[700, 200]],
+    levelIndx: [0]
+}
+
+const level_One = new Level([], [ [] ], []);
+const level_Two = new Level([tektite], [ [ [10,10], [1652,694] ] ], [5]);
+
+
 walls = [LevelOneWalls, LevelTwoWalls];
+gateways = [LevelOneGateways, LevelTwoGateways];
 
 
 //-----------FUNCTIONS
@@ -52,9 +91,7 @@ walls = [LevelOneWalls, LevelTwoWalls];
 
 function initLevels(){
     allLevels.push(level_One);
-
-    //initialize walls
-    initWalls(currentLevel);
+    allLevels.push(level_Two);
 }
 
 function initWalls(){
@@ -69,6 +106,26 @@ function initWalls(){
     }
 }
 
+function initGateways(){
+    for(let i = 0; i < allLevels.length; i++){
+        gates = gateways[i];
+
+        for(let j = 0; j < gates.pos_x.length; j++){
+            const gate = new Gateway(gates.pos_x[j], gates.pos_y[j], gates.width[j], gates.height[j], gates.playerPos[j], gates.levelIndx[j]);
+            allLevels[i].gateways.push(gate);
+
+            const div = document.createElement('div');
+            div.style.top = gates.pos_y[j] + 'px';
+            div.style.left = gates.pos_x[j] + 'px';
+            div.style.width = gates.width[j] + 'px';
+            div.style.height = gates.height[j] + 'px';
+            div.style.backgroundColor = 'red';
+            div.style.position = 'absolute';
+
+            document.querySelector('body').appendChild(div);
+        }
+    }
+}
 //------
 
 function loadLevel(indx){
@@ -81,5 +138,21 @@ function loadLevel(indx){
             level.enemies.push(enemy);
         }
     }
+
+    playerRender();
+    renderWalls(indx);
     renderEnemies(indx);
+}
+
+function unloadLevel(indx){
+    for(let i = 0; i<allLevels[indx].enemies.length; i++){
+        allLevels[indx].enemies[i].element.remove();
+    }
+
+    allLevels[indx].enemies = [];
+
+    for(let j = 0; j < allLevels[indx].walls.length; j++){
+        allLevels[indx].walls[j].element.remove();
+    }
+
 }
