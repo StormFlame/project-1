@@ -37,6 +37,30 @@ class Enemy{
     }
 }
 
+class projectile{
+    constructor(pos, dir, levelIndx, projObj, dmgAmount){
+        this.pos = pos;
+        this.dir = dir;
+        this.levelIndx = levelIndx;
+        this.projObj = projObj;
+        this.damage = dmgAmount;
+
+        this.element = spawnProjectile(this);
+
+        this.move();
+    }
+
+    move(){
+        this.projObj.behavior(this);
+    };
+
+    die(){
+        const projs = allLevels[this.levelIndx].projectiles; 
+        projs.splice(projs.indexOf(this), 1);
+        this.element.remove();
+    }
+}
+
 
 //OBJECTS
 
@@ -173,6 +197,8 @@ const octorok = {
         const inter = 40;
         const speed = 4;
 
+        let canAttack = false;
+
         //UP, DOWN, RIGHT, LEFT
         const dir = [0,0,0,0];
         let dirIndx = RndmRange(0, 4, true)
@@ -189,6 +215,10 @@ const octorok = {
                 }
             }
 
+            if(!canAttack){
+                checkForPlayer();
+            }
+
             octorok.pos[1] -= speed * dir[0];
             octorok.pos[1] += speed * dir[1];
             octorok.pos[0] += speed * dir[2];
@@ -200,6 +230,7 @@ const octorok = {
 
         const changeDirInterval = setInterval(function(){
             setDirection(dirIndx);
+            canAttack = false;
         },RndmRange(1000, 5000));
 
         function setDirection(indx){
@@ -246,6 +277,57 @@ const octorok = {
             }
 
             return false;
+        }
+
+        function checkForPlayer(){
+            if(dirIndx === 0){
+                const col = checkCollisions([octorok.pos[0], octorok.pos[1] - 600], [parseInt(getComputedStyle(octorok.element).width), 600], player.pos, player.size, false);
+                if(col === true){
+                    canAttack = true;
+                    const proj = new projectile([octorok.pos[0]+15, octorok.pos[1]-30], [1,0,0,0], octorok.levelIndx, rock, octorok.damage);
+                    allLevels[octorok.levelIndx].projectiles.push(proj);
+                }
+            }
+        }
+    }
+}
+
+const rock = {
+    className: 'rock',
+    behavior: function rockMove(rock){
+        const inter = 25;
+        const speed = 5;
+        const move = setInterval(function(){
+            rock.pos[1] -= rock.dir[0] * speed;
+            rock.pos[1] += rock.dir[1] * speed;
+            rock.pos[0] += rock.dir[2] * speed;
+            rock.pos[0] -= rock.dir[3] * speed;
+
+            checkForCollission();
+
+            renderProjectiles(rock.levelIndx);
+
+        }, inter);
+
+        function checkForCollission(){
+            const walls = allLevels[rock.levelIndx].walls;
+            let col;
+            
+            for(let i = 0; i < walls.length; i++){
+                elem = getComputedStyle(rock.element);
+                col = checkCollisions(rock.pos, [parseInt(elem.width), parseInt(elem.height)], [wall.pos_x, wall.pos_y], [wall.width, wall.height], false);
+                if(col === true){
+                    rock.die();
+                }
+            }
+
+            col = checkCollisions(rock.pos, [parseInt(elem.width), parseInt(elem.height)], player.pos, player.size, false);
+
+            if(col === true){
+                player.takeDamage(rock.damage);
+                rock.die();
+            }
+
         }
     }
 }

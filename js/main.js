@@ -17,6 +17,9 @@ const player = {
     size: [100, 100],
     moveDirToggle: [1,1,1,1],
     element: document.getElementById('player'),
+    takeDamage: function(amount){
+        player.health -= amount;
+    }
 }
 
 //-----------------------------------------------------------------
@@ -101,6 +104,22 @@ function renderEnemies(indx){
         //     enemy.element.addEventListener('click', function(e){
         //     enemy.takeDamage(1);
         // });
+    });
+}
+
+function spawnProjectile(obj){
+    const div = document.createElement('div');
+    div.className = obj.projObj.className;
+
+    return div;   
+}
+
+function renderProjectiles (indx){
+    allLevels[indx].projectiles.forEach(function(projectile){
+        projectile.element.style.top = projectile.pos[1] + 'px';
+        projectile.element.style.left = projectile.pos[0] + 'px';
+
+        body.appendChild(projectile.element);
     });
 }
 

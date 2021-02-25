@@ -14,5 +14,13 @@
     left: 0px;
     position: absolute;
     background-color: red;
-    z-index: 2;
+}
+
+.rock{
+    width: 30px;
+    height: 30px;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: purple;   
 }

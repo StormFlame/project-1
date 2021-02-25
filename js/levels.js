@@ -37,6 +37,7 @@ class Level{
         this.gateways = [];
         this.enemies = [];
         this.walls = [];
+        this.projectiles = [];
     }
 }
 
@@ -77,7 +78,7 @@ const LevelTwoGateways ={
     levelIndx: [0]
 }
 
-const level_One = new Level([octorok], [ [[300,300], [900,900]] ], [5]);
+const level_One = new Level([octorok], [ [[300,300], [900,900]] ], [4]);
 const level_Two = new Level([tektite], [ [ [10,10], [1652,694] ] ], [5]);
 
 
@@ -150,6 +151,12 @@ function unloadLevel(indx){
     }
 
     allLevels[indx].enemies = [];
+
+    for(let s = 0; s < allLevels[indx].projectiles.length; s++){
+        allLevels[indx].projectiles[s].element.remove();
+    }
+
+    allLevels[indx].projectiles = [];
 
     for(let j = 0; j < allLevels[indx].walls.length; j++){
         allLevels[indx].walls[j].element.remove();
