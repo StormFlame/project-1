@@ -6,3 +6,13 @@
     position: absolute;
     background-color: blue;
 }
+
+.octorok{
+    width: 60px;
+    height: 60px;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    background-color: red;
+    z-index: 2;
+}

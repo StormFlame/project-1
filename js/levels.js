@@ -44,10 +44,10 @@ class Level{
 
 //walls
 const LevelOneWalls = {
-    pos_x: [0, 200, 300],
-    pos_y: [0, 200, 500],
-    width: [500, 50, 100],
-    height: [70, 50, 250]
+    pos_x: [ 200, 300],
+    pos_y: [200, 500],
+    width: [50, 100],
+    height: [50, 250]
 }
 
 
@@ -77,7 +77,7 @@ const LevelTwoGateways ={
     levelIndx: [0]
 }
 
-const level_One = new Level([], [ [] ], []);
+const level_One = new Level([octorok], [ [[300,300], [900,900]] ], [5]);
 const level_Two = new Level([tektite], [ [ [10,10], [1652,694] ] ], [5]);
 
 

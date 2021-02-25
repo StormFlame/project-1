@@ -164,3 +164,88 @@ const tektite = {
         }
     }
 }
+
+const octorok = {
+    health: 2,
+    damage: 1,
+    className: 'octorok',
+    behavior: function octorokBehavior(octorok){
+        const inter = 40;
+        const speed = 4;
+
+        //UP, DOWN, RIGHT, LEFT
+        const dir = [0,0,0,0];
+        let dirIndx = RndmRange(0, 4, true)
+        dir[dirIndx] = 1;
+
+        const move = setInterval(function(){
+
+            walls = allLevels[octorok.levelIndx].walls;
+
+            for(let i = 0; i < walls.length; i++){
+
+                if(!checkBorder(dirIndx, walls[i])){
+                    setDirection(dirIndx);
+                }
+            }
+
+            octorok.pos[1] -= speed * dir[0];
+            octorok.pos[1] += speed * dir[1];
+            octorok.pos[0] += speed * dir[2];
+            octorok.pos[0] -= speed * dir[3];
+
+            renderEnemies(octorok.levelIndx);
+
+        }, inter);
+
+        const changeDirInterval = setInterval(function(){
+            setDirection(dirIndx);
+        },RndmRange(1000, 5000));
+
+        function setDirection(indx){
+            dir[dirIndx] = 0;
+
+            do{
+                dirIndx = RndmRange(0, 4, true);
+            }while(dirIndx === indx);
+
+            dir[dirIndx] = 1;
+        }
+
+        function checkBorder(indx, wall){
+            let x;
+            let col;
+
+            const width = parseInt(getComputedStyle(octorok.element).width);
+            const height = parseInt(getComputedStyle(octorok.element).height);
+
+            if(indx === 0){
+                x = octorok.pos[1] - speed;
+                col = checkCollisions([octorok.pos[0], x], [width, height], [wall.pos_x, wall.pos_y], [wall.width, wall.height], false);
+                if(allLevels[octorok.levelIndx].spawnAreas[octorok.amountIndx][0][1] < x && col !== true){
+                    return true;
+                }
+            }else if(indx === 1){
+                x = octorok.pos[1] + speed;
+                col = checkCollisions([octorok.pos[0], x], [width, height], [wall.pos_x, wall.pos_y], [wall.width, wall.height], false);
+                if(allLevels[octorok.levelIndx].spawnAreas[octorok.amountIndx][1][1] > x && col !== true){
+                    return true;
+                }
+            }else if(indx === 2){
+                x = octorok.pos[0] + speed;
+                col = checkCollisions([x, octorok.pos[1]], [width, height], [wall.pos_x, wall.pos_y], [wall.width, wall.height], false);
+                if(allLevels[octorok.levelIndx].spawnAreas[octorok.amountIndx][1][0] > x && col !== true){
+                    return true;
+                }
+            }else if(indx === 3){
+                x = octorok.pos[0] - speed;
+                col = checkCollisions([x, octorok.pos[1]], [width, height], [wall.pos_x, wall.pos_y], [wall.width, wall.height], false);
+                if(allLevels[octorok.levelIndx].spawnAreas[octorok.amountIndx][0][0] < x && col !== true){
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+}
