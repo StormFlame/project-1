@@ -5,6 +5,7 @@
     left: 0px;
     position: absolute;
     background-color: blue;
+    z-index: 2;
 }
 
 .octorok{
@@ -14,6 +15,7 @@
     left: 0px;
     position: absolute;
     background-color: red;
+    z-index: 2;
 }
 
 .rock{

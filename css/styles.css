@@ -12,8 +12,17 @@ body{
 }
 
 #player{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     background-color: grey;
     position: absolute;
+    z-index: 3;
+}
+
+#sword{
+    width: 10px;
+    height: 30px;
+    background-color: blue;
+    position: absolute;
+    visibility: hidden;
 }

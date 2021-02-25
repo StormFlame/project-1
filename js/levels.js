@@ -46,9 +46,9 @@ class Level{
 //walls
 const LevelOneWalls = {
     pos_x: [ 200, 300],
-    pos_y: [200, 500],
-    width: [50, 100],
-    height: [50, 250]
+    pos_y: [200, 200],
+    width: [50, 800],
+    height: [50, 20]
 }
 
 

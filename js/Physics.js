@@ -66,15 +66,19 @@ function playerMove(key){
     switch(key){
         case 's':
             player.pos[1] += player.speed * player.moveDirToggle[1];
+            player.dir = [0,1,0,0];
         break;
         case 'w':
             player.pos[1] -= player.speed * player.moveDirToggle[0];
+            player.dir = [1,0,0,0];
         break;
         case 'd':
             player.pos[0] += player.speed * player.moveDirToggle[2];
+            player.dir = [0,0,1,0];
         break;
         case 'a':
             player.pos[0] -= player.speed * player.moveDirToggle[3];
+            player.dir = [0,0,0,1];
         break;
     }
 

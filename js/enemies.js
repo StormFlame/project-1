@@ -197,7 +197,7 @@ const octorok = {
         const inter = 40;
         const speed = 4;
 
-        let canAttack = false;
+        let canAttack = true;
 
         //UP, DOWN, RIGHT, LEFT
         const dir = [0,0,0,0];
@@ -215,7 +215,7 @@ const octorok = {
                 }
             }
 
-            if(!canAttack){
+            if(canAttack === true){
                 checkForPlayer();
             }
 
@@ -230,7 +230,6 @@ const octorok = {
 
         const changeDirInterval = setInterval(function(){
             setDirection(dirIndx);
-            canAttack = false;
         },RndmRange(1000, 5000));
 
         function setDirection(indx){
@@ -283,11 +282,42 @@ const octorok = {
             if(dirIndx === 0){
                 const col = checkCollisions([octorok.pos[0], octorok.pos[1] - 600], [parseInt(getComputedStyle(octorok.element).width), 600], player.pos, player.size, false);
                 if(col === true){
-                    canAttack = true;
+                    canAttack = false;
                     const proj = new projectile([octorok.pos[0]+15, octorok.pos[1]-30], [1,0,0,0], octorok.levelIndx, rock, octorok.damage);
                     allLevels[octorok.levelIndx].projectiles.push(proj);
+                    setCanAttack();
+                }
+            }else if(dirIndx === 1){
+                const col = checkCollisions([octorok.pos[0], octorok.pos[1]], [parseInt(getComputedStyle(octorok.element).width), 600], player.pos, player.size, false);
+                if(col === true){
+                    canAttack = false;
+                    const proj = new projectile([octorok.pos[0]+15, octorok.pos[1]+60], [0,1,0,0], octorok.levelIndx, rock, octorok.damage);
+                    allLevels[octorok.levelIndx].projectiles.push(proj);
+                    setCanAttack();
+                }
+            }else if(dirIndx === 2){
+                const col = checkCollisions([octorok.pos[0], octorok.pos[1]], [600, parseInt(getComputedStyle(octorok.element).height)], player.pos, player.size, false);
+                if(col === true){
+                    canAttack = false;
+                    const proj = new projectile([octorok.pos[0] + 60, octorok.pos[1]+15], [0,0,1,0], octorok.levelIndx, rock, octorok.damage);
+                    allLevels[octorok.levelIndx].projectiles.push(proj);
+                    setCanAttack();
+                }
+            }else if(dir === 3){
+                const col = checkCollisions([octorok.pos[0] - 600, octorok.pos[1]], [parseInt(getComputedStyle(octorok.element).width), 600], player.pos, player.size, false);
+                if(col === true){
+                    canAttack = false;
+                    const proj = new projectile([octorok.pos[0] - 30, octorok.pos[1]+15], [0,0,0,1], octorok.levelIndx, rock, octorok.damage);
+                    allLevels[octorok.levelIndx].projectiles.push(proj);
+                    setCanAttack();
                 }
             }
+        }
+
+        function setCanAttack (){
+            setTimeout(function(){
+                canAttack = true;
+            },3000);
         }
     }
 }
@@ -303,23 +333,21 @@ const rock = {
             rock.pos[0] += rock.dir[2] * speed;
             rock.pos[0] -= rock.dir[3] * speed;
 
-            checkForCollission();
-
             renderProjectiles(rock.levelIndx);
+            checkForCollission();
 
         }, inter);
 
         function checkForCollission(){
-            const walls = allLevels[rock.levelIndx].walls;
             let col;
             
-            for(let i = 0; i < walls.length; i++){
+            allLevels[rock.levelIndx].walls.forEach(function(wall){
                 elem = getComputedStyle(rock.element);
                 col = checkCollisions(rock.pos, [parseInt(elem.width), parseInt(elem.height)], [wall.pos_x, wall.pos_y], [wall.width, wall.height], false);
                 if(col === true){
                     rock.die();
                 }
-            }
+            });
 
             col = checkCollisions(rock.pos, [parseInt(elem.width), parseInt(elem.height)], player.pos, player.size, false);
 
