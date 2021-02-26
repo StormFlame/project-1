@@ -29,7 +29,7 @@ ___
 ## Getting Started
 ### controll the character using WASD
 ### left click to attack with sword
-### Defeat all 13 enemies to win. 
+### Defeat all 13 enemies to win
 ### You only have three hearts
 
 ___
@@ -41,6 +41,7 @@ ___
 ## Future plans and upgrades
 1. Throw sword function when at full health
 2. Swap background colors with sprite images
-3. More enemies
-4. At least one dungeon
+3. Enemy drops
+4. More enemies
+5. At least one dungeon
 
