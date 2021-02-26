@@ -131,9 +131,9 @@ function firstInitialize(){
     player.size[0] *= prcnt;
     player.size[1] *= prcnt;
 
-    initState();
     //initialize levels
     initLevels();
+    initState();
     initWalls();
     initGateways();
 
@@ -153,6 +153,9 @@ function initState(){
     totalEnemies = 13;
     enemiesKilled = 0;
     currentLevel = 0;
+    allLevels[1].enemiesAmount[0] = 5;
+    allLevels[2].enemiesAmount[0] = 4;
+    allLevels[3].enemiesAmount[0] = 4;
 }
 
 //UPDATE
