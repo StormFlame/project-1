@@ -1,14 +1,71 @@
-body{
+html{
     height: 100vh;
-    border: solid black 4px;
+    margin: 0;
+}
+
+body{
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    background-color: tan;
 }
 
 .wall{
+    background-color: green;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.wall-sword-event{
     background-color: black;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     z-index: 1;
+}
+
+.btn{
+    position: relative;
+    width: 50%;
+    height: 30%;
+    font-size: 2vh;
+    background-color: white;
+    border-radius: 0px;
+    border: solid grey 4px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 800;
+    transition: .2s;
+}
+
+.btn:hover{
+    background-color: black;
+    border: solid white 4px;
+    color: white;
+}
+
+.btn:active{
+    background-color: white;
+    border: solid black 4px;
+    color: black;
+}
+
+.heart{
+    margin: 5vh 2%;
+    width: 6%;
+    height: 10vh;
+    background-color: red;
+    z-index: 4;
+    display: inline-block;
+}
+
+.kill-stats{
+    color: white;
+    margin-top: 15vh;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3vh;
 }
 
 #player{
@@ -16,7 +73,7 @@ body{
     height: 80px;
     background-color: grey;
     position: absolute;
-    z-index: 3;
+    z-index: 2;
 }
 
 #sword{
@@ -25,4 +82,104 @@ body{
     background-color: blue;
     position: absolute;
     visibility: hidden;
+}
+
+#game-over{
+    top: 30vh;
+    left: 30%;
+    width: 40%;
+    height: 20vh;
+    background-color: white;
+    position: absolute;
+    z-index: 10;
+    text-align: center;
+    font-size: 2vh;
+    border-radius: 10px;
+    border: solid black 6px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    visibility: hidden;
+}
+
+#stats-bottom{
+    top: 80vh;
+    left: 0;
+    width: 100%;
+    height: 20vh;
+    background-color: black;
+    position: absolute;
+    z-index: 4;
+    text-align: center;
+    font-size: 2vh;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+#stats-right{
+    top: 0;
+    left: 80%;
+    width: 20%;
+    height: 100vh;
+    background-color: black;
+    position: absolute;
+    z-index: 4;
+    text-align: center;
+    font-size: 2vh;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+#get-sword{
+    top: 30vh;
+    left: 30%;
+    width: 40%;
+    height: 20vh;
+    background-color: white;
+    position: absolute;
+    z-index: 10;
+    text-align: center;
+    font-size: 2vh;
+    border-radius: 10px;
+    border: solid black 6px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    visibility: hidden;
+}
+
+#sword-display{
+    margin: 5vh 2% 0 2%;
+    width: 6%;
+    height: 10vh;
+    background-color: silver;
+    z-index: 4;
+    position: absolute;
+    display: inline-block;
+    visibility: hidden;
+}
+
+#sword-display-blade{
+    top: 1vh;
+    left: 45%;
+    width: 10%;
+    height: 7vh;
+    background-color: black;
+    z-index: 5;
+    position: absolute;
+}
+#sword-display-hilt{
+    top: 5.5vh;
+    left: 30%;
+    width: 40%;
+    height: 1vh;
+    background-color: black;
+    z-index: 5;
+    position: absolute;
 }
