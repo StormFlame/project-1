@@ -3,6 +3,9 @@
 ### The beginning of a retro Legend of Zelda remake. Includes two full-functioning enemy behaviors for the Tektite enemy and the Octorok enemy. The player wins the game by defeating all the enemies. 
 ___
 
+![screenshot](/images/wireframe.jpeg "Wireframe")
+___
+
 ![screenshot](/images/firstLevel.png "Level 1")
 ___
 
